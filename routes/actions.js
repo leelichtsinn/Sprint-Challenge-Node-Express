@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 // POST /api/actions/create
 router.post('/create', (req, res) => {
   const action = req.body;
-  if (action.project_id && action.description && action.notes) {
+  if (action.project_id && (action.description.length <= 128) && action.notes) {
     actionsDb
       .insert(action)
       .then(idInfo => {

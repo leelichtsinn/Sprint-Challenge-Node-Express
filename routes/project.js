@@ -52,7 +52,7 @@ router.get('/:projectId/actions', (req, res) => {
 // POST /api/projects/create
 router.post('/create', (req, res) => {
   const project = req.body;
-  if (project.name && project.description) {
+  if ((project.name.lenth <= 128) && project.description) {
     projectsDb
       .insert(project)
       .then(idInfo => {
