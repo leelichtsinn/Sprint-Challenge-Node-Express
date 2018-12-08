@@ -80,9 +80,29 @@ router.put('/update/:id', (req, res) => {
         .status(500)
         .json({ message: 'action information could not be modified' });
     });
-})
+});
 
 // DELETE /api actions/delete/:id
-
+router.delete('/delete/:id', (req, res) => {
+  const { id } = req.params;
+  actionsDb
+    .remove(id)
+    .then(count => {
+      if (count) {
+        res
+          .status(201)
+          .json({ message: 'action successfully deleted' });
+      } else {
+        res
+          .status(404)
+          .json({ message: 'the action with the specified id does not exist' });
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ errorMessage: 'action could not be deleted' });
+    });
+});
 
 module.exports = router;
