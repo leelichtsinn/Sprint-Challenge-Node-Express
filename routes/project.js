@@ -59,6 +59,26 @@ router.post('/create', (req, res) => {
   }
 });
 
+// UPDATE /api/projects/update
+router.put('/update/:id', (req, res) => {
+  const project = req.body;
+  const { id } = req.params
+  projectsDb
+    .update(id, project)
+      .then(count => {
+        projectsDb
+          .get(id)
+            .then(project => {
+              res
+                .status(201)
+                .json(project);
+            });
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'project information could not be modified'});
+      });
+});
+
 // DELETE /api/projects/delete/:id
 router.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
