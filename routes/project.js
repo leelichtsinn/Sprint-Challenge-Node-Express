@@ -32,6 +32,23 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// GET /api/projects/:id/actions
+router.get('/:projectId/actions', (req, res) => {
+  const { projectId } = req.params;
+  projectsDb
+    .getProjectActions(projectId)
+    .then(actions => {
+      res
+        .status(201)
+        .send(actions);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ errorMessage: 'unable to get project actions' });
+    });
+});
+
 // POST /api/projects/create
 router.post('/create', (req, res) => {
   const project = req.body;
