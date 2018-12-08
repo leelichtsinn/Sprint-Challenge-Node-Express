@@ -58,9 +58,29 @@ router.post('/create', (req, res) => {
       .status(400)
       .json({ errorMessage: 'please provide a description and notes for the action' });
   }
-})
+});
 
 // PUT /api/actions/update/:id
+router.put('/update/:id', (req, res) => {
+  const action = req.body;
+  const { id } = req.params;
+  actionsDb
+    .update(id, action)
+    .then(count => {
+      actionsDb
+        .get(id)
+        .then(action => {
+          res
+            .status(201)
+            .json(action);
+        });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: 'action information could not be modified' });
+    });
+})
 
 // DELETE /api actions/delete/:id
 

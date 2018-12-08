@@ -79,7 +79,7 @@ router.post('/create', (req, res) => {
 // UPDATE /api/projects/update
 router.put('/update/:id', (req, res) => {
   const project = req.body;
-  const { id } = req.params
+  const { id } = req.params;
   projectsDb
     .update(id, project)
       .then(count => {
